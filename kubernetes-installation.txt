@@ -1,0 +1,4 @@
+Installation guide for Production Cluster kubernetes
+https://github.com/kelseyhightower/kubernetes-the-hard-way
+
+Installation for Minikube
