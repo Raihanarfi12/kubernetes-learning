@@ -44,3 +44,6 @@ $ source /etc/bash_completion
 $ source <(minikube completion bash)
 #If needed, also run the following command:
 $ minikube completion bash
+
+#list node of minikube
+minikube node list
