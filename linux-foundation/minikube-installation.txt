@@ -27,3 +27,20 @@ minikube status
 
 #list of driver, runtime, ip, port, version of minikube
 minikube profile list
+
+#Set which minikube cluster or profile that we use
+minikube profile {Name_of_profile}
+
+#Stop minikube cluster
+minikube stop (default cluster/profile)
+minikube stop -p {Name of profile}
+
+#display version
+minikube version
+
+#Completion is a helpful post installation configuration to enable the minikube command to respond to typical auto-completion mechanisms, such as completing a command in the terminal by pressing the TAB key. To enable completion for the bash shell on Ubuntu:
+$ sudo apt install bash-completion
+$ source /etc/bash_completion
+$ source <(minikube completion bash)
+#If needed, also run the following command:
+$ minikube completion bash
