@@ -1,0 +1,49 @@
+Link address for minikube installation for linux : https://storage.googleapis.com/minikube/releases/latest/minikube_linux_amd64
+
+Minikube command :
+
+minikube start --driver=virtualbox
+minikube start -p (make cluster with customization of # of node, driver, kubernetes version or container runtime)
+
+Example : 
+$ minikube start --kubernetes-version=v1.27.10 \
+  --driver=podman --profile minipod
+
+$ minikube start --nodes=2 --kubernetes-version=v1.28.1 \
+  --driver=docker --profile doubledocker
+
+$ minikube start --driver=virtualbox --nodes=3 --disk-size=10g \
+  --cpus=2 --memory=6g --kubernetes-version=v1.27.12 --cni=calico \
+  --container-runtime=cri-o -p multivbox
+
+$ minikube start --driver=docker --cpus=6 --memory=8g \
+  --kubernetes-version="1.27.12" -p largedock
+
+$ minikube start --driver=virtualbox -n 3 --container-runtime=containerd \
+  --cni=calico -p minibox
+
+# show minikube status
+minikube status
+
+#list of driver, runtime, ip, port, version of minikube
+minikube profile list
+
+#Set which minikube cluster or profile that we use
+minikube profile {Name_of_profile}
+
+#Stop minikube cluster
+minikube stop (default cluster/profile)
+minikube stop -p {Name of profile}
+
+#display version
+minikube version
+
+#Completion is a helpful post installation configuration to enable the minikube command to respond to typical auto-completion mechanisms, such as completing a command in the terminal by pressing the TAB key. To enable completion for the bash shell on Ubuntu:
+$ sudo apt install bash-completion
+$ source /etc/bash_completion
+$ source <(minikube completion bash)
+#If needed, also run the following command:
+$ minikube completion bash
+
+#list node of minikube
+minikube node list
