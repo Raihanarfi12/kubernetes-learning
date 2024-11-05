@@ -1,0 +1,9 @@
+Kubectl command : 
+- kubectl create -f {deployment_file.yml}
+- kubectl get pods
+- kubectl describe pod {pod_name} --> check event that happend to pod
+- kubectl get pods -o wide
+- kubectl run {pod_name} --image={image_name} --port={port}
+- kubectl run nginx-pod --image=nginx:1.22.1 --port=80 --dry-run=client -o yaml > nginx-pod.yaml (dry run to show what happend next when we run this command)
+- kubectl delete pod {pod_name}
+- kubectl replace --force -f {deployment_file} --> reapply deployment file, used for fix wrong or invalid template

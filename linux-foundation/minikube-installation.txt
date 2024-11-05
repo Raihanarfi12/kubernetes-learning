@@ -55,7 +55,7 @@ https://trainingportal.linuxfoundation.org/learn/course/introduction-to-kubernet
 #Show config of kubectl
 kubectl config view
 
-#Show addons for kubernetes (add metrics-server and dashboard)
+#Show addons for kubernetes and add metrics-server and dashboard
 $ minikube addons list
 $ minikube addons enable metrics-server
 $ minikube addons enable dashboard
