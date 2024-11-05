@@ -7,3 +7,18 @@ Kubectl command :
 - kubectl run nginx-pod --image=nginx:1.22.1 --port=80 --dry-run=client -o yaml > nginx-pod.yaml (dry run to show what happend next when we run this command)
 - kubectl delete pod {pod_name}
 - kubectl replace --force -f {deployment_file} --> reapply deployment file, used for fix wrong or invalid template
+
+Objects in kubernetes:
+  - node
+    - control plane
+      - api server
+      - controller manager
+      - scheduler
+      - kubelet
+      - kube-proxy
+    - worker
+      - kubelet
+      - kube-proxy
+  - pods
+  - namespace
+  - labels
