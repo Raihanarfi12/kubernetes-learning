@@ -47,3 +47,25 @@ $ minikube completion bash
 
 #list node of minikube
 minikube node list
+
+#install kubectl
+https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
+https://trainingportal.linuxfoundation.org/learn/course/introduction-to-kubernetes/accessing-minikube-1/accessing-minikube?page=3
+
+#Show config of kubectl
+kubectl config view
+
+#Show addons for kubernetes and add metrics-server and dashboard
+$ minikube addons list
+$ minikube addons enable metrics-server
+$ minikube addons enable dashboard
+$ minikube addons list
+$ minikube dashboard 
+
+#run kubectl to control plane
+kubectl proxy
+
+#run without kubectl proxy
+$ export TOKEN=$(kubectl create token default)
+$ kubectl create clusterrole api-access-root --verb=get --non-resource-url=/* (example : System-wide This group consists of system-wide API endpoints, like /healthz, /logs, /metrics, /ui, etc.)
+$ kubectl create clusterrolebinding api-access-root --clusterrole api-access-root --serviceaccount=default:default
