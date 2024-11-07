@@ -1,4 +1,6 @@
-Kubectl command : 
+Kubectl command :
+- kubectl config view
+- kubectl proxy 
 - kubectl create -f {deployment_file.yml}
 - kubectl get pods
 - kubectl describe pod {pod_name} --> check event that happend to pod
@@ -7,9 +9,12 @@ Kubectl command :
 - kubectl run nginx-pod --image=nginx:1.22.1 --port=80 --dry-run=client -o yaml > nginx-pod.yaml (dry run to show what happend next when we run this command)
 - kubectl delete pod {pod_name}
 - kubectl replace --force -f {deployment_file} --> reapply deployment file, used for fix wrong or invalid template
+- kubectl get replicasets (or kubectl get rs)
+- kubectl get replicaset {replicaset_name} -o [yaml,json]
 
 Objects in kubernetes:
-  - node
+  - cluster --> group of nodes for kubernetes infrastructure
+  - node --> can be physic machine or virtual machine
     - control plane
       - api server
       - controller manager
@@ -19,6 +24,20 @@ Objects in kubernetes:
     - worker
       - kubelet
       - kube-proxy
-  - pods
-  - namespace
-  - labels
+  - pods --> smallest unit in kubernetes
+  - namespace --> sub-cluster
+  - labels --> tagging for objects in kubernetes
+    - selector
+      - equality-based selector --> equals
+      - set-based selector --> in or not in, !app (no label key app)
+  - replication controller --> ensure number of replica based on desired state of application (legacy type)
+    - only support equality-based selector
+  - Deployment --> manage creation, update, and deletion of pods. Automatically create replicaset.
+    - Support update and rolling back (RollingUpdate strategy)
+    - Deploymentcontroller is part of control plane controller manager
+  - Replicaset --> control lifecycle of multiple replica of pod for HA
+    - support self healing
+    - support equality-based and set-based selector
+    - Do not support update and rolling back
+
+    
