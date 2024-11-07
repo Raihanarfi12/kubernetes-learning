@@ -1,0 +1,72 @@
+kubectl create namespace {name_of_namespace}
+
+#Add user
+sudo useradd -s /bin/bash {username}
+sudo passwd {username} #will be prompted to input password
+
+#generate private key
+openssl genrsa -out {filename}.key 2048
+
+openssl req -new -key {filename}.key -out {filename}.csr -subj "/CN=bob/O=learner"
+
+vim signing-request.yaml
+---
+apiVersion: certificates.k8s.io/v1
+kind: CertificateSigningRequest
+metadata:
+  name: bob-csr
+spec:
+  groups:
+  - system:authenticated
+  request: {output of {filename}.csr}
+  signerName: kubernetes.io/kube-apiserver-client
+  usages:
+  - digital signature
+  - key encipherment
+  - client auth
+---
+
+cat bob.csr | base64 | tr -d '\n','%' # will be input to request value
+
+kubectl create -f signing-request.yaml
+kubectl get csr
+kubectl certificate approve bob-csr
+kubectl get csr bob-csr -o jsonpath='{.status.certificate}' | base64 -d > {filename}.crt
+kubectl config set-credentials bob --client-certificate={filename}.crt --client-key={filename}.key
+kubectl config set-context bob-context --cluster={cluster_name} --namespace={name_of_namespace} --user={username}
+kubectl config view #View configuration of kubectl
+
+#Create role
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: pod-reader
+  namespace: lfs158
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "watch", "list"]
+---
+
+kubectl create -f role.yaml
+
+#Bind role
+vim rolebinding.yaml
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: pod-read-access
+  namespace: lfs158
+subjects:
+- kind: User
+  name: bob
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: pod-reader
+  apiGroup: rbac.authorization.k8s.io
+---
+
+kubectl -n lfs158 get rolebindings #List of rolebindings

@@ -11,6 +11,8 @@ Kubectl command :
 - kubectl replace --force -f {deployment_file} --> reapply deployment file, used for fix wrong or invalid template
 - kubectl get replicasets (or kubectl get rs)
 - kubectl get replicaset {replicaset_name} -o [yaml,json]
+- kubectl run admitted --image=nginx --image-pull-policy=IfNotPresent
+- kubectl run mutated --image=nginx --image-pull-policy=IfNotPresent
 
 Objects in kubernetes:
   - cluster --> group of nodes for kubernetes infrastructure
@@ -68,5 +70,28 @@ Authorization modes :
         - Role grant to specific resources within specific namespace
       - ClusterRole
         - Same as role, but scope is cluster wide
+
+Admission control : 
+  - Specify granular Access control policies, ex : 
+    - allowing priviledged container
+    - checking on quota resources
+    - Activated using parameter --enable-admission-plugins=NamespaceLifecycle,ResourceQuota,PodSecurity,DefaultStorageClass
+  - Type of admission controllers :
+    - Limitranger (Scope per individual pod or container)
+      - Ensures that pods and containers have resource limits defined.
+      - If LimitRange resources are defined in a namespace, LimitRanger checks whether the requests (for CPU and memory) in a pod fall within those limits.
+      - If requests or limits are missing, it can set default values or deny the request if it's out of bounds.
+    - ResourceQuota (Scope per namespace)
+      - Enforces resource quotas in a namespace, limiting the total resource consumption for pods, services, or other Kubernetes objects within that namespace.
+      - It ensures that resources (like CPU, memory, or object counts) do not exceed predefined limits.
+      - If a request would exceed the quota, the admission controller denies it.
+    - DefaultStorageClass
+      - Ensures that persistent volume claims (PVCs) have a default storage class if none is specified.
+      - When a PVC is created without specifying a storage class, the DefaultStorageClass admission controller automatically assigns the default storage class if one is available.
+      - This simplifies the PVC creation process and ensures that storage is dynamically provisioned when needed.
+    - AlwaysPullImages
+      - Forces the imagePullPolicy of all containers to Always, regardless of what is specified in the pod specification.
+      - This ensures that the latest image is always pulled from the registry, preventing accidental use of cached or old images.
+      - Particularly useful in multi-tenant clusters where you want to prevent image reuse that may lead to security issues.
 
     
