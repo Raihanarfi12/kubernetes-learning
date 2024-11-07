@@ -1,5 +1,11 @@
-Link address for minikube installation for linux : https://storage.googleapis.com/minikube/releases/latest/minikube_linux_amd64
 
+Link address for minikube installation file for linux : https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+
+Installation of minikube :
+curl -LO \
+https://storage.googleapis.com/minikube/releases/v1.31.2/minikube-linux-amd64
+
+sudo install minikube-linux-amd64 /usr/local/bin/minikube && rm minikube-linux-amd64
 Minikube command :
 
 minikube start --driver=virtualbox
@@ -47,26 +53,3 @@ $ minikube completion bash
 
 #list node of minikube
 minikube node list
-
-#install kubectl
-https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
-https://trainingportal.linuxfoundation.org/learn/course/introduction-to-kubernetes/accessing-minikube-1/accessing-minikube?page=3
-
-#Show config of kubectl
-kubectl config view
-
-#Show addons for kubernetes and add metrics-server and dashboard
-$ minikube addons list
-$ minikube addons enable metrics-server
-$ minikube addons enable dashboard
-$ minikube addons list
-$ minikube dashboard 
-
-#run kubectl to control plane
-kubectl proxy
-
-#run without kubectl proxy
-$ export TOKEN=$(kubectl create token default)
-$ kubectl create clusterrole api-access-root --verb=get --non-resource-url=/* (example : System-wide This group consists of system-wide API endpoints, like /healthz, /logs, /metrics, /ui, etc.)
-$ kubectl create clusterrolebinding api-access-root --clusterrole api-access-root --serviceaccount=default:default
-

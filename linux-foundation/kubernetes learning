@@ -40,4 +40,33 @@ Objects in kubernetes:
     - support equality-based and set-based selector
     - Do not support update and rolling back
 
+Users in kubernetes authentication :
+  - Normal Users
+  - Service Account
+
+Authentication modules :
+  - X509 Client certificates
+  - Static token file
+  - Bootstrap token
+  - Service account tokens
+  - OpenID Connect tokens
+  - Webhook Token Authentication
+  - Authenticating proxy
+
+Authorization modes : 
+  - Node
+    --> Used for authorization for kubelet to read operation to node, service, endpoint and write operation to node, service, endpoint, pods
+  - Attribute Based Access Control (ABAC)
+    --> Combine Attribute with policy.
+    --> For specify ABAC mode ,  --authorization-mode=ABAC and --authorization-policy-file=PolicyFile.json
+  - Webhook
+    --> Integrate to third party
+  - Role-Based Access Control (RBAC)
+    - Restric based on operations or group of operations (Role), assigned to Users
+    - Kind of roles
+      - Role
+        - Role grant to specific resources within specific namespace
+      - ClusterRole
+        - Same as role, but scope is cluster wide
+
     
