@@ -39,3 +39,5 @@ Objects in kubernetes:
     - support self healing
     - support equality-based and set-based selector
     - Do not support update and rolling back
+
+    
