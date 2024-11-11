@@ -19,6 +19,7 @@ Kubectl command :
 - kubectl get ep
 #Edit service
 - kubectl edit svc {name_of_service}
+- kubectl port-forward deploy/frontend 8080:5000 
 
 Objects in kubernetes:
   - cluster --> group of nodes for kubernetes infrastructure
@@ -74,10 +75,29 @@ Objects in kubernetes:
         - local
             - isolates number of pods or endpoints in service on same node in load balancing traffic
             - specific node that capture inbound traffic (Nodeport)
-
   - Service discovery
     - Environment variables
     - DNS
+  - LoadBalancer
+    - Nodeport and ClusterIP automatically
+    - Service is exposed at a static port on each worker node
+    - Service is exposed externally using cloud provided LoadBalancer
+    - Only supported for automatic created load balancer and support kubernetes
+  - ExternalIP
+    - Can route one or multi worker nodes.
+    - Traffic that is ingressed into cluster with externalIP as destination IP on service port, get routed to service endpoint
+    - Require Load Balancer from cloud provider
+    - Not managed by Kubernetes
+  - ExternalName
+    - No specific namespace and not define any endpoint
+    - return CName record of an externally configured service
+  - Multi port service
+    - Expose many ports from any pod
+    - Expose group of pods that contain many container with different port
+  - Port Forwarding
+    - Forward local port to application port
+    - Application port can be pod port, service port, endpoint port, or deployment container port
+    - Alternative to Nodeport, usually used for troubleshooting or debugging
 
 
 Users in kubernetes authentication :
