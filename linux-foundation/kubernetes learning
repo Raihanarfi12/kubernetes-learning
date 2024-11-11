@@ -13,6 +13,12 @@ Kubectl command :
 - kubectl get replicaset {replicaset_name} -o [yaml,json]
 - kubectl run admitted --image=nginx --image-pull-policy=IfNotPresent
 - kubectl run mutated --image=nginx --image-pull-policy=IfNotPresent
+#Grep selector for specific service (For getting pods related to service)
+- kubectl describe svc pod-hello | grep -i selector
+#Grep endpoint (IP address and exposed port of pods related to service)
+- kubectl get ep
+#Edit service
+- kubectl edit svc {name_of_service}
 
 Objects in kubernetes:
   - cluster --> group of nodes for kubernetes infrastructure
@@ -41,6 +47,38 @@ Objects in kubernetes:
     - support self healing
     - support equality-based and set-based selector
     - Do not support update and rolling back
+  - service :
+    - Group logical of pods that can be chosen by label and selector
+    - Type of services :
+        - ClusterIP
+            - default service type
+            - Can be accessed within cluster only
+        - Nodeport
+            - High port, dynamically picked port number from 30000-32767
+            - Example, if we mapping port 32233 to frontend-svc, it will be directed to clusterIP of frontend-svc
+            - Useful when port accessed from external user, and then proxied internally to clusterIP
+        - LoadBalancer
+
+  - kube-proxy
+    - Daemon each cluster node, watching API server in control plane for addition, removal or update of service and endpoints
+    - Build redundantly with iptables
+    - Load balancing to endpoints/pods
+    - If traffic policies not assigned, service will direct or routed traffic randomly for load balancing
+
+  - Traffic Policies :
+    - Make sure traffic routed based on policy / not randomly
+    - Applied for internal traffic from cluster of external traffic from client
+    - Type of traffic policies :
+        - cluster
+            - default behavior or traffic policies not assigned. Target all endpoints of services in load balancing
+        - local
+            - isolates number of pods or endpoints in service on same node in load balancing traffic
+            - specific node that capture inbound traffic (Nodeport)
+
+  - Service discovery
+    - Environment variables
+    - DNS
+
 
 Users in kubernetes authentication :
   - Normal Users
