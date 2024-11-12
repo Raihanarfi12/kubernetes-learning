@@ -210,4 +210,5 @@ Kubernetes Volume :
     - Used for volume interface, volume plugin, designed on different container orchestrator with a variety of storage technologies
 
   - Persistent Volume
+    - provide APIs for manage and
   - Persistent Volume Claims
