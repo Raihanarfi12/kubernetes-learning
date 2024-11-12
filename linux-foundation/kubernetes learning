@@ -183,5 +183,31 @@ Liveness and Readiness Probe:
 
 Kubernetes Volume :
   - Volume
+    - Storage abstraction that allow various storage technologies
+    - An ephemeral volume is mount point on container file system backed by media storage
+    - Ephemeral volume linked to pod
+    - Volume can be shared among containers of pod
+    - Type of Volume
+      - emptyDir
+        - tightly coupled with pod. If pod deleted or terminated, then data of emptyDir is deleted
+      - hostPath
+        - Shared between and host. If pod terminated, data still stored or available in host. 
+      - gcePersistentDisk
+      - awsElasticBlockStore
+      - azureDisk
+      - azureFile
+      - cephfs
+      - nfs
+      - iscsi
+      - secret
+        - Supply sensitive information (password, secret, certificate, key)
+      - configMap
+        - Store configuration data or shell command
+      - persistentVolumeClaim
+        - Persistent Volume is consumed by pod using persistentVolumeClaim
+
+  - Container Storage Interface (CSI)
+    - Used for volume interface, volume plugin, designed on different container orchestrator with a variety of storage technologies
+
   - Persistent Volume
   - Persistent Volume Claims
