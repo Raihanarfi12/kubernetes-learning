@@ -19,7 +19,10 @@ Kubectl command :
 - kubectl get ep
 #Edit service
 - kubectl edit svc {name_of_service}
-- kubectl port-forward deploy/frontend 8080:5000 
+- kubectl port-forward deploy/frontend 8080:5000 (url can be accessed through port 8080)
+- kubectl expose deployment webserver --name=web-service --type=NodePort
+- kubectl create deployment webserver --image=nginx:alpine --replicas=3 --port=80
+- kubectl delete deployments web-dash
 
 Objects in kubernetes:
   - cluster --> group of nodes for kubernetes infrastructure
@@ -152,4 +155,33 @@ Admission control :
       - This ensures that the latest image is always pulled from the registry, preventing accidental use of cached or old images.
       - Particularly useful in multi-tenant clusters where you want to prevent image reuse that may lead to security issues.
 
-    
+Liveness and Readiness Probe:
+  - Liveness :
+    - Used when pods still running, but application in container was issue
+    - It can be caused of application deadlock or memory pressure
+    - Liveness probe can help us to restart the container or application automatically based on application health
+    - Can be set by:
+      - Liveness command
+        - Checking existence file of /tmp/healthy
+      - Liveness HTTP request
+        - Send HTTP GET request to /healthz of endpoint application with port 8080.
+        - If failed, the kubelet will restart the container.
+      - TCP Liveness probe
+        - Attempts to open TCP socket to container.
+        - If succeed, application considered be healthy. Otherwise, application marked as unhealthy and container will be restarted
+      - gRPC Liveness probe
+        - Required port to be defined
+        - Optionally, use the service field to use same port with other application
+
+  - Readiness probe
+    - Ensure dependent services in ready in container before serve traffic
+    - Command or template similar to liveness probe'
+
+  - Startup probe
+    - Designed for legacy application
+    - Used when inizialization or startup of application take long time and used for delay the liveness and Readiness probe
+
+Kubernetes Volume :
+  - Volume
+  - Persistent Volume
+  - Persistent Volume Claims
