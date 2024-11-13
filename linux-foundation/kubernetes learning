@@ -209,6 +209,26 @@ Kubernetes Volume :
   - Container Storage Interface (CSI)
     - Used for volume interface, volume plugin, designed on different container orchestrator with a variety of storage technologies
 
-  - Persistent Volume
-    - provide APIs for manage and
-  - Persistent Volume Claims
+  - Persistent Volume:
+    - provide APIs for manage and consume storage
+    - Manage volume use PersistentVolume API resource type
+    - Consume volume use persistentVolumeClaim API resource type
+    - Volume types support Persistent Volume:
+      - GCEPersistentDisk 
+      - AWS EBS
+      - Azure File 
+      - Azure Disk 
+      - NFS 
+      - CephFS 
+      - iSCSI
+
+  - Persistent Volume Claims:
+    - Request storage by user
+    - Request based on access mode, storage class, size, and volume mode
+    - Access mode:
+      - ReadWriteOnce (read-write by single node)
+      - ReadOnlyMany (read only by many nodes)
+      - ReadWriteMany (read-write by many nodes)
+      - ReadWriteOncePod (read-write by single pod)
+    - Mounted into pods directory
+    
