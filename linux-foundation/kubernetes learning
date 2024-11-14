@@ -25,8 +25,8 @@ Kubectl command :
 - kubectl delete deployments web-dash
 - kubectl create configmap {config-name} --from-literal=key1=value1
 - kubectl create configmap green-web-cm --from-file=index.html
-
-
+- kubectl create secret generic my-password --from-literal=password=mypassword
+- kubectl get secret {secret_name}
 Objects in kubernetes:
   - cluster --> group of nodes for kubernetes infrastructure
   - node --> can be physic machine or virtual machine
@@ -54,6 +54,7 @@ Objects in kubernetes:
     - support self healing
     - support equality-based and set-based selector
     - Do not support update and rolling back
+    Example in replicaset.yaml
   - service :
     - Group logical of pods that can be chosen by label and selector
     - Type of services :
@@ -276,6 +277,68 @@ ConfigMaps:
       - name: config-volume
         configMap:
           name: vol-config-map
+
+Secrets:
+  - Encode plain text to in base 64 the sensitive information
+  - We can share sensitive information like password, tokens, or key, so secrets can reducing risk of exposure.
+  - In deployment or other resources, secret object is referenced.
+  - Secret loaded in plain text in etcd
+  - Encryption at rest can be applied in etcd, but need enable plugin from API server
+  apiVersion: v1
+    kind: Secret
+    metadata:
+      name: my-password
+    type: Opaque {other can be kubernetes.io/service-account-token, kubernetes.io/dockerconfigjson, kubernetes.io/dockercfg, kubernetes.io/tls}
+    stringData:
+      password: mysqlpassword
+  Use secret as environment variable
+  spec:
+  containers:
+  - image: wordpress:4.7.3-apache
+    name: wordpress
+    env:
+    - name: WORDPRESS_DB_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: my-password
+          key: password
+  
+  Use secret in pod (as volume)
+  spec:
+  containers:
+  - image: wordpress:4.7.3-apache
+    name: wordpress
+    volumeMounts:
+    - name: secret-volume
+      mountPath: "/etc/secret-data"
+      readOnly: true
+  volumes:
+  - name: secret-volume
+    secret:
+      secretName: my-password
+
+Ingress:
+ - Usually, routing tables depend on service. As long as service exist, the route table exist
+ - Ingress can be used, when we want decouple routing tables from application and also centralize rule management
+ - Ingress is used for manage inbound connection to cluster
+ - Ingress configure layer 7 HTTP/S load balancing for services and provide:
+    - TLS
+    - Name-based virtual hosting
+    - Fanout routing
+    - Load balancing
+    - Custom rules
+ Example in ingress.yaml
+ - Ingress can be applied based on name-based virtual hosting (subdomain based routing) or fanout ingress rules (path based)
+ Topology example in picture ingress-topology.png
+
+Ingress Controller:
+  - An application watching the control plane node APIserver for change of ingress resources and update L7 load balancer.
+  - Also known as controllers, ingress proxy, service proxy, reverse proxy.
+  - GCE L7 LB Controller, AWS LB Controller, and Nginx Ingress controller commonly used Ingress Controller.
+  
+
+
+
       
     
 
