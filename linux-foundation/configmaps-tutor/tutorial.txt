@@ -1,0 +1,3 @@
+kubectl create configmap green-web-cm --from-file=index.html
+kubectl apply -f web-green-with-cm.yaml
+kubectl expose deployment green-web --type=NodePort

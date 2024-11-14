@@ -23,6 +23,9 @@ Kubectl command :
 - kubectl expose deployment webserver --name=web-service --type=NodePort
 - kubectl create deployment webserver --image=nginx:alpine --replicas=3 --port=80
 - kubectl delete deployments web-dash
+- kubectl create configmap {config-name} --from-literal=key1=value1
+- kubectl create configmap green-web-cm --from-file=index.html
+
 
 Objects in kubernetes:
   - cluster --> group of nodes for kubernetes infrastructure
@@ -231,4 +234,49 @@ Kubernetes Volume :
       - ReadWriteMany (read-write by many nodes)
       - ReadWriteOncePod (read-write by single pod)
     - Mounted into pods directory
+
+ConfigMaps:
+  - Decouple configuration details from container images
+  - Pass key-value pairs, then used by pods
+  - Usually used for Environment variables, set arguments and command
+  - Guide from create or use configmaps:
+    - Create configmaps from file
+      - kubectl create configmap permission-config \--from-file=<path/to/>permission-reset.properties
+    - Use configmaps as Environment variables:
+      containers:
+        - name: myapp-full-container
+          image: myapp
+          envFrom:
+          - configMapRef:
+            name: full-config-map
+      #or used multiple environment variables
+      -containers:
+        - name: myapp-specific-container
+          image: myapp
+          env:
+          - name: SPECIFIC_ENV_VAR1
+            valueFrom:
+              configMapKeyRef:
+                name: config-map-1
+                key: SPECIFIC_DATA
+          - name: SPECIFIC_ENV_VAR2
+            valueFrom:
+              configMapKeyRef:
+                name: config-map-2
+                key: SPECIFIC_INFO
+    - Use configmaps as volume: 
     
+      -containers:
+      - name: myapp-vol-container
+        image: myapp
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/config
+      volumes:
+      - name: config-volume
+        configMap:
+          name: vol-config-map
+      
+    
+
+
