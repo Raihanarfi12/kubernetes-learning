@@ -338,6 +338,12 @@ Ingress Controller:
 
 Annotation:
   - Arbitrary non-identifying metadata to any objects in kubernetes
+  - Annotation not used for select objects
+  - Annotation are similar to tagging in Azure or AWS
+  - Annotation can be used:
+    - Store build/release ID, PR number, git request
+    - Phone/pager of PIC owner, or directory of information can be found
+    
 
 
 
