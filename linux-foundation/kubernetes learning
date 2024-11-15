@@ -27,6 +27,10 @@ Kubectl command :
 - kubectl create configmap green-web-cm --from-file=index.html
 - kubectl create secret generic my-password --from-literal=password=mypassword
 - kubectl get secret {secret_name}
+- kubectl annotate pod {pod_name} key1=value1 key2=value2
+- kubectl run saved --image=nginx:alpine --save-config=true
+- kubectl get pod saved -o yaml
+
 Objects in kubernetes:
   - cluster --> group of nodes for kubernetes infrastructure
   - node --> can be physic machine or virtual machine
@@ -343,6 +347,31 @@ Annotation:
   - Annotation can be used:
     - Store build/release ID, PR number, git request
     - Phone/pager of PIC owner, or directory of information can be found
+    - Pointer to logging, monitoring, and analytic
+    - Ingress controller information
+    - Deployment state and revision
+
+Quota and Limits Management:
+  - Used where there are many users using kubernetes cluster, we need manage usage for fair usage
+  - Type of quota per namespace (Resourcequota):
+    - Compute Resource Quota
+      - Limit sum of compute usage (CPU, Memory) in a namespace
+        - requests.cpu/memory vs limit.cpu/memory:
+          - request is how much resource will be allocated to container. Guarantee that you can used it.
+          - In request, if we request 200 MiB, but only used for right now is 100 MiB, the others will be borrowed by other container and claimed back when need it
+          - Limit is how much container can consume resource (requested+borrow)
+            - If a container exceed limit, container will be terminated
+            - If a container exceed request, its like that pod will be removed from nodes that run out of memory
+          - Limit will have higher value than request
+    - Storage Resource Quota
+      - Limit sum of storage usage (PVC,request.storage) that can be requested
+    - Object Count Quota
+      - Restrict number of objects (Pod, Configmaps, PVC, ReplicationController, Services, secret)
+  - LimitRange
+    - Set compute usage per pod or container in a namespace
+    - Set storage request limit per PVC in a namespace
+    - Set a request to limit ratio for a resource in a namespace
+    - Set default requests and limits and automatically inject them into Container's environments at runtime
     
 
 
