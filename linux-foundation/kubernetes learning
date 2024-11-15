@@ -335,7 +335,10 @@ Ingress Controller:
   - An application watching the control plane node APIserver for change of ingress resources and update L7 load balancer.
   - Also known as controllers, ingress proxy, service proxy, reverse proxy.
   - GCE L7 LB Controller, AWS LB Controller, and Nginx Ingress controller commonly used Ingress Controller.
-  
+
+Annotation:
+  - Arbitrary non-identifying metadata to any objects in kubernetes
+
 
 
 
