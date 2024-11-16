@@ -30,6 +30,16 @@ Kubectl command :
 - kubectl annotate pod {pod_name} key1=value1 key2=value2
 - kubectl run saved --image=nginx:alpine --save-config=true
 - kubectl get pod saved -o yaml
+- kubectl logs pod-name
+- kubectl logs pod-name container-name
+- kubectl logs pod-name container-namme -p (for very last log)
+- kubectl exec pod-name -- ls -la /
+- kubectl exec pod-name -c container-name -- env (get environment variable in container)
+- kubectl exec pod-name -c container-name -it -- /bin/sh (execute shell or ssh)
+- kubectl get events
+- kubectl events (not kuberntes native, should be installed as plugin)
+- kubectl describe pod pod-name
+
 
 Objects in kubernetes:
   - cluster --> group of nodes for kubernetes infrastructure
@@ -390,7 +400,31 @@ Quota and Limits Management:
     - Can specify default allow and default deny (recommended to apply default deny to and from namespace, and then allow specific traffic)
     - Example in network-policy.yaml
 
+  - Monitoring, Logging, and Troubleshooting
+    - We have to collect resource usage data by Pods, Services, nodes to understand overall consumption of resource and make decision for scaling
+    - Monitoring tools :
+      - Metrics Server
+        - Cluster wide aggregator of resource usage data
+        - Available as a plugin
+        - Extract resource utilization data from cluster with 'kubectl top nodes' and 'kubectl top pods' and can be sort use --sort-by=cpu or memory
 
+      - Prometheus
+        - Can extract resource usage from different kubernetes objects
+        - Using its client library, we can also instrument code of application
+
+    - Logging tools :
+      - Collect logs from different resources or components (cluster,object,node) in kubernetes
+      - By default, kubernetes doesn't provide cluster wide logging
+      - Tools for logging : Elasticsearch together with fluentd with custom configuration as an agent in node
+      - Kubernetes only collect logs from running containers, so if container was restarted because of failure, the logs collected until very last log.
+      - Command for logging
+        - kubectl logs pod-name
+        - kubectl logs pod-name container-name
+        - kubectl logs pod-name container-namme -p (for very last log)
+      - Also, user can run custom command in a running container of pod
+        - kubectl exec pod-name -- ls -la /
+        - kubectl exec pod-name -c container-name -- env
+        - kubectl exec pod-name -c container-name -it -- /bin/sh
 
 
 
