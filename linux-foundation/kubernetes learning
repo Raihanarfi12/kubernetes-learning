@@ -373,6 +373,26 @@ Quota and Limits Management:
     - Set a request to limit ratio for a resource in a namespace
     - Set default requests and limits and automatically inject them into Container's environments at runtime
     
+  - Security Context
+    - Define priviledge and control access to specific pods and containers only.
+    - Allow to set Discretionary Access Control for object access permissions, privileged running, capabilities, security labels.
+    - Example in security-context.yaml
+  
+  - Pod Security Admission
+    - Apply security setting to multiple pods and containers cluster wide.
+    - Built-in admission controller for pod security that is enabled by default in API Server
+    - It can enforce three pod security standard : Priviledged, Baseline, Restricted
+
+  - Network Policies
+    - Set rules which define how pods are allowed to other pods in cluster namespace
+    - Similar to firewall
+    - Network policy API specify podselectors, Ingress, and/or Egress policyTypes and rules based on source and destination ipBlocks and ports.
+    - Can specify default allow and default deny (recommended to apply default deny to and from namespace, and then allow specific traffic)
+    - Example in network-policy.yaml
+
+
+
+
 
 
 
