@@ -426,6 +426,21 @@ Quota and Limits Management:
         - kubectl exec pod-name -c container-name -- env
         - kubectl exec pod-name -c container-name -it -- /bin/sh
 
+Helm:
+  - To deploy complex application, we use many kubernetes manifest (can be yaml files) to define API resources like Deployment,Services,PV
+  - Chart --> Bundle all manifests after templatizing them into well defined format along with other metadata
+  - Helm is package manager (like yum or apt in linux) for Kubernetes which can install/update/delete those charts in Kubernetes cluster
+  - Helm is client CLI that run side by side with kubectl in workstation
+  - Helm focused on help user to manage manifest or template for managing kubernetes.
+  - Helm queries chart repositories based on searched parameters, downloads a desired chart, and then it request API server to deploy resources
+
+Service Mesh:
+  - Manage Kubernetes connectivity, can be integrated with services and ingress controller
+  - Provide feature service discovery, mutual TLS (mTLS) certificate for encyption, multi-cloud routing, and traffic telemetry
+  - Service mesh relies on proxy component part of data plane, then manage by control plane
+  - Control plane run agent for service discovery, telemetry, load balancing, network policy, and ingress/egress gateway
+  - Data plane proxy keep communicating for pods-to-pods communication, while also constantly communicating to service mesh of control plane
+
 
 
 

@@ -1,0 +1,18 @@
+Strategy for application deployment:
+- Blue/green deployment
+    Deploys both the old and new versions of an application side by side. The new version is available through a different service or port, and is tested before replacing the old version.
+    Also built in different environment and deployment controller, but only one environment keep receiving taffic.
+- Rolling deployment
+    Replaces existing pods in a cluster with a new version, one by one, without causing cluster downtime. 
+- A/B testing
+    Targets a specific group of customers to test how well a version achieves business goals. 
+- Recreate deployment
+    Shuts down the current version of an application and deploys a new version, usually causing some downtime. 
+- Shadow deployment
+    Allows developers to test new versions of an application without disrupting production traffic. 
+- Ramped slow rollout
+    Gradually increases the number of new pods to validate stability and performance.
+- Canary deployment
+    Runs two application releases simultaneously managed by two independent deployment controllers, both exposed by same services.
+    The users can manage amount of traffic each deployment is seperated scaling up/down of two deployment controller
+
