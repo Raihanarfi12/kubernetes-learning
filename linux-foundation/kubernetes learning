@@ -11,6 +11,7 @@ Kubectl command :
 - kubectl replace --force -f {deployment_file} --> reapply deployment file, used for fix wrong or invalid template
 - kubectl get replicasets (or kubectl get rs)
 - kubectl get replicaset {replicaset_name} -o [yaml,json]
+- kubectl scale --replicas={desired_count} rs/{replicaset-name}
 - kubectl run admitted --image=nginx --image-pull-policy=IfNotPresent
 - kubectl run mutated --image=nginx --image-pull-policy=IfNotPresent
 #Grep selector for specific service (For getting pods related to service)
