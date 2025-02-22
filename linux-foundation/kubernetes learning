@@ -39,7 +39,7 @@ Kubectl command :
 - kubectl get events
 - kubectl events (not kuberntes native, should be installed as plugin)
 - kubectl describe pod pod-name
-- kubectl api-resources | grep replicaset (grep which version supported for replicaset)
+
 
 Objects in kubernetes:
   - cluster --> group of nodes for kubernetes infrastructure
