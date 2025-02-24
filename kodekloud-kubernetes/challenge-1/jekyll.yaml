@@ -15,8 +15,11 @@ spec:
   containers:
     - name: jekyll
       image: gcr.io/kodekloud/customimage/jekyll-serve
+      volumeMounts:
+      - name: site
+        mountPath: /site
   volumes:
-    - name: jekyll-site
+    - name: site
       persistentVolumeClaim:
         claimName: jekyll-site
 
