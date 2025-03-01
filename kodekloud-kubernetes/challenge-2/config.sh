@@ -11,3 +11,8 @@ kubectl uncordon node01
 
 #copy file from controlplane /media path to node01 /web path
 scp /media/* node01:/web
+
+kubectl apply -f data-pv.yaml
+kubectl apply -f data-pvc.yaml
+kubectl apply -f gop-file-server.yaml
+kubectl apply -f gop-fs-service.yaml

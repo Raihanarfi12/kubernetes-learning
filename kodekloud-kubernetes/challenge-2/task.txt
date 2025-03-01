@@ -12,6 +12,7 @@ gop-fs-service:
 - New Service, name: 'gop-fs-service'
 - Service name: gop-fs-service, port: '8080'
 - Service name: gop-fs-service, targetPort: '8080'
+- Service name: gop-fs-service, nodePort: '31200'
 
 gop-file-server:
 - Create a pod for file server, name: 'gop-file-server'
