@@ -14,3 +14,7 @@ kubectl config set-credentials martin \
 kubectl config set-context developer \
   --cluster=kubernetes \
   --user=martin
+
+kubectl use-context developer \
+  --cluster=kubernetes \
+  --user=martin 

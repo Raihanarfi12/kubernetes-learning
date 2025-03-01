@@ -1,0 +1,74 @@
+Kubernetes Challenge 2:
+
+controlplane:
+- Master node: coredns deployment has image: 'registry.k8s.io/coredns/coredns:v1.8.6'
+- Fix kube-apiserver. Make sure its running and healthy.
+- kubeconfig = /root/.kube/config, User = 'kubernetes-admin' Cluster: Server Port = '6443'
+
+node01:
+- node01 is ready and can schedule pods?
+
+gop-fs-service:
+- New Service, name: 'gop-fs-service'
+- Service name: gop-fs-service, port: '8080'
+- Service name: gop-fs-service, targetPort: '8080'
+
+gop-file-server:
+- Create a pod for file server, name: 'gop-file-server'
+- pod: gop-file-server image: 'kodekloud/fileserver'
+- pod: gop-file-server mountPath: '/web'
+- pod: gop-file-server volumeMount name: 'data-store'
+- pod: gop-file-server persistent volume name: data-store
+- pod: gop-file-server persistent volume claim used: 'data-pvc'
+
+data-pvc:
+- Create new PersistentVolumeClaim = 'data-pvc'
+- PersistentVolume = 'data-pvc', accessModes = 'ReadWriteMany'
+- PersistentVolume = 'data-pvc', storage request = '1Gi'
+- PersistentVolume = 'data-pvc', volumeName = 'data-pv'
+
+data-pv:
+- Create new PersistentVolume = 'data-pv'
+- PersistentVolume = data-pv, accessModes = 'ReadWriteMany'
+- PersistentVolume = data-pv, hostPath = '/web'
+- PersistentVolume = data-pv, storage = '1Gi'
+
+/web directory:
+- Copy all images from the directory '/media' on the controlplane node to '/web' directory on node01
+
+
+Steps for troubleshooting :
+Master node :
+- Open file root/.kube/config
+- Check if cluster server to https://controlplane:6443
+- Run ;ls -l /etc/kubernetes/pki/*.crt' for list the certificates
+- Check configuration of cert in /etc/kubernetes/manifests/kube-apiserver.yaml
+- Run 'systemctl restart kubelet'
+- Run 'watch crictl ps' to check process in kubernetes control plane
+- Run kubectl get pods -n kube-system
+- Run kubectl edit deployment -n kube-system coredns and edit image name 'registry.k8s.io/coredns/coredns:v1.8.6'
+
+Note :
+CoreDNS is the default DNS server for Kubernetes clusters. It provides DNS-based service discovery within the cluster, allowing pods to resolve service names to IP addresses.
+
+Node01 :
+- check nodes with 'kubectl get nodes'
+- Then you find that node01 status is now: NodeNotSchedulable. This status means that node available to schedule new pods, prevent workloads.
+- Run kubectl uncordon node01
+
+/web directory:
+- run 'scp /media/* node01:web/
+
+For other services, run kubectl apply -f {name of component}.yaml
+
+Note for PersistentVolume :
+Type with hostPath :
+
+type Value	Description
+DirectoryOrCreate	Creates the directory if it doesn’t exist.
+Directory	Fails if the directory doesn’t exist.
+FileOrCreate	Creates an empty file if it doesn’t exist.
+File	Fails if the file doesn’t exist.
+Socket	Ensures the path is a Unix socket.
+CharDevice	Ensures the path is a character device.
+BlockDevice	Ensures the path is a block device.
