@@ -7,7 +7,6 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  volumeMode: Filesystem
   accessModes:
     - ReadWriteMany
   storageClassName: local-storage
