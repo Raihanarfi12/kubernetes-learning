@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-deployment
+  namespace: vote
+spec:
+  selector:
+    matchLabels:
+      run: redis-deployment
+  template:
+    metadata:
+      labels:
+        run: redis-deployment
+    spec:
+      containers:
+      - name: redis-deployment
+        image: redis:alpine
+        volumeMounts:
+        - mountPath: /data
+          name: redis-data
+      volumes:
+      - name: redis-data
+        emptyDir: {}
