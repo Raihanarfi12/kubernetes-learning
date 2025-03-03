@@ -5,7 +5,7 @@ metadata:
   namespace: vote
 spec:
   selector:
-    run: vote-deployment
+    app: vote-deployment
   ports:
   - port: 5000
     targetPort: 80

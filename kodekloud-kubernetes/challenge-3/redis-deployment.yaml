@@ -6,11 +6,11 @@ metadata:
 spec:
   selector:
     matchLabels:
-      run: redis-deployment
+      app: redis-deployment
   template:
     metadata:
       labels:
-        run: redis-deployment
+        app: redis-deployment
     spec:
       containers:
       - name: redis-deployment

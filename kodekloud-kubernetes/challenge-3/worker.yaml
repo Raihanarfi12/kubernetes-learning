@@ -6,11 +6,11 @@ metadata:
 spec:
   selector:
     matchLabels:
-      run: worker
+      app: worker
   template:
     metadata:
       labels:
-        run: worker
+        app: worker
     spec:
       containers:
       - name: worker

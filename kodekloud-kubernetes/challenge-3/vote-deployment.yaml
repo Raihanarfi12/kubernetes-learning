@@ -6,11 +6,11 @@ metadata:
 spec:
   selector:
     matchLabels:
-      run: vote-deployment
+      app: vote-deployment
   template:
     metadata:
       labels:
-        run: vote-deployment
+        app: vote-deployment
     spec:
       containers:
       - name: vote
