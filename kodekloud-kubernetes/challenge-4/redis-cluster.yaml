@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: redis
-        image: 5.0.1-alpine
+        image: redis:5.0.1-alpine
         env:
         - name: POD_IP
           valueFrom:
